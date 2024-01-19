@@ -4,6 +4,14 @@
  */
 package Vista;
 
+import Controladores.GeneralManager;
+import Modelo.Nota;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VandurTheWizard <https://github.com/VandurTheWizard>
@@ -13,8 +21,28 @@ public class Index extends javax.swing.JFrame {
     /**
      * Creates new form Index
      */
+    
+    DefaultTableModel modelo;
+    ArrayList <Nota> lista;
+    
     public Index() {
         initComponents();
+        
+        modelo = (DefaultTableModel) jTable1.getModel();
+        
+        lista = new GeneralManager().scanNotes(new File("C:\\Users\\radok\\Desktop\\Notes"), false);
+        
+        for(Nota n : lista){
+            Object [] o = {n.getTema(), n.getNombre()};
+            modelo.addRow(o);
+        }
+        
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                jTextArea1.setText(new GeneralManager().readNote(new File("C:\\Users\\radok\\Desktop\\Notes" + "\\" + modelo.getValueAt(jTable1.getSelectedRow(), 0) + "\\" + modelo.getValueAt(jTable1.getSelectedRow(), 1))));
+            }
+        });
     }
 
     /**
@@ -26,12 +54,32 @@ public class Index extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mBEscanear = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tema", "Nota"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         jMenu1.setText("File");
 
@@ -42,6 +90,12 @@ public class Index extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mBEscanear);
+
+        jMenuItem1.setText("Nuevo tema");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Nueva nota");
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -54,11 +108,21 @@ public class Index extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -108,6 +172,12 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JMenuItem mBEscanear;
     // End of variables declaration//GEN-END:variables
 }

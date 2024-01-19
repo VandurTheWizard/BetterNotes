@@ -7,6 +7,7 @@ package betternotes;
 import Controladores.CSVManager;
 import Controladores.GeneralManager;
 import Modelo.Nota;
+import Vista.Index;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -21,19 +22,9 @@ public class BetterNotes {
      */
     public static void main(String[] args) {
         //Zona de testeo
-        GeneralManager gm = new GeneralManager();
+        Index i = new Index();
         
-        ArrayList <Nota> lista = gm.scanNotes(new File("C:\\Users\\radok\\Desktop\\Test"), false);
-        
-        if(lista != null){
-            for(Nota n : lista){
-                System.out.println(n);
-                
-                CSVManager csvMana = new CSVManager();
-        
-                csvMana.writeCSV(lista, new File("C:\\Users\\radok\\Desktop\\Test\\ScanNotas.csv"));
-            }
-        }
+        i.setVisible(true);
     }
     
 }

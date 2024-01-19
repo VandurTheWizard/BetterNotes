@@ -5,8 +5,14 @@
 package Controladores;
 
 import Modelo.Nota;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,4 +56,36 @@ public class GeneralManager {
         return list;
     }
     
+    
+    public String readNote(File f){
+        FileReader fr = null;
+        BufferedReader br = null;
+        String txt = "";
+        
+        try {
+            fr = new FileReader(f);
+            br = new BufferedReader(fr);
+            
+            String aux = "";
+            
+            while((aux = br.readLine()) != null){
+                txt += aux + "\n";
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GeneralManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GeneralManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                br.close();
+                fr.close();
+            } catch (IOException ex) {
+                Logger.getLogger(GeneralManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+        return txt;
+    }
 }

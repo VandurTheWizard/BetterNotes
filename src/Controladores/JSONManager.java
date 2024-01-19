@@ -30,6 +30,7 @@ public class JSONManager {
             fw = new FileWriter(f, true);
             
             for(Nota n : lista){
+                //Codigo para escribir el Json
                 
             }
             
@@ -37,6 +38,6 @@ public class JSONManager {
             Logger.getLogger(JSONManager.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        }
+        
     }
 }
