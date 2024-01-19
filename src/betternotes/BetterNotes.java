@@ -4,9 +4,15 @@
  */
 package betternotes;
 
+import Controladores.CSVManager;
+import Controladores.GeneralManager;
+import Modelo.Nota;
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  *
- * @author VandurTheWizard
+ * @author VandurTheWizard <https://github.com/VandurTheWizard>
  */
 public class BetterNotes {
 
@@ -14,8 +20,20 @@ public class BetterNotes {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //Zona de testeo
+        GeneralManager gm = new GeneralManager();
         
+        ArrayList <Nota> lista = gm.scanNotes(new File("C:\\Users\\radok\\Desktop\\Test"), false);
+        
+        if(lista != null){
+            for(Nota n : lista){
+                System.out.println(n);
+                
+                CSVManager csvMana = new CSVManager();
+        
+                csvMana.writeCSV(lista, new File("C:\\Users\\radok\\Desktop\\Test\\ScanNotas.csv"));
+            }
+        }
     }
     
 }
